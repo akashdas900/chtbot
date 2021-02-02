@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <title>Admission Chatbot</title>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
+    <link rel="icon" href="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      h1 {
+        border: 1px solid white;
+        border-radius: 5px;
+        color: #ce9e62;
+        display: inline-block;Alegreya
+        font-size: 3em;
+        margin: 5;
+        padding: 10px;
+      }
+      #chatbox {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: 'Alegreya';
+        font-size: 17px;
+      }
+      .userText {
+        color: white;
+        font-family: 'Alegreya';
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+        border-radius: 5px;
+      }
+      .userText span {
+        padding:10px;
+        background-color: #4b6777;
+        border-radius: 5px;
+      }
+      .botText {
+        color: #ce9e62;
+        font-family: 'Alegreya';
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+        border-radius: 5px;
+      }
+      .botText span {
+        background-color: #2c2c2c;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        margin-top: 60px;
+        border-radius: 5px;
+      }
+      input[type=text] {
+        bottom: 0;
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        position: fixed;
+        border-radius: 5px;
+      }
+      .button {
+  background-color: #2c2c2c;
+  border: none;
+  color: #ce9e62;
+  padding: 10px 18px;
+  text-align: center;
+  border-radius:12px;
+  font-size: 15px;
+  margin: 4px 2px;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color:  #4b6777;
+  color: white;
+}
+    </style>
+  </head>
+  <body background="{{ url_for('static', filename='images/university.jpg') }}">
+    <img />
+    <center>
+      <h1>
+      Admission Chatbot
+      </h1>
+    </center>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+        </div>
+      </div>
+        <div id="userInput">
+          <input id="nameInput" type="text" name="msg" placeholder="Ask me anything..." />
+        </div>
+<script>
+        function myFunction(clicked_id) {
+        var msgg="";
+        clicked=parseInt(clicked_id)
+        switch(clicked)
+          {
+          case 1 :
+            msgg="Admission Link";
+            break;
+          case 2 :
+            msgg="Engineering Departments";
+            break;
+          case 3 :
+            msgg="Hostel and Mess";
+            break;
+          case 4 :
+            msgg="Intake Capacity";
+            break;
+          case 5 :
+            msgg="Co-curricular Activities";
+            break;
+          case 6 :
+            msgg="Computer Science";
+            break;
+          case 7 :
+            msgg="Information Technology";
+            break;
+          case 8 :
+            msgg="Electronics and Telecommunication";
+            break;
+          case 9 :
+            msgg="Electronics";
+            break;
+          case 10 :
+            msgg="Chemical Engineering";
+            break;
+          case 11 :
+            msgg="Mechanical Engineering";
+            break;
+        }
+          var userHtml = '<p class="userText"><span>' + msgg + "</span></p>";
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          response(msgg);
+            }
+        function work(x,y)
+        {
+          var b=y;
+          var botBtn = '<button class="button" id = '+b+' onclick="myFunction(this.id)">'+x+"</button>";
+          $("#chatbox").append(botBtn);
+        }
+        function res1()
+        {
+          work("Admission Link",1);
+          work("Engineering Departments",2);
+          work("Hostel and Mess",3);
+          work("Intake Capacity",4);
+          work("Co-curricular Activities",5);
+        }
+        function res2()
+        {
+          work("Computer Science",6);
+          work("Information Technology",7);
+          work("Electronics and Telecommunication",8);
+          work("Electronics",9);
+          work("Chemical",10);
+          work("Mechanical",11);
+        }
+        function response(text)
+        {
+          $.get("/get", { msg: text }).done(function(data) {
+            var u = String(data);
+            var z=u.split(" ");
+            var t = z[0];
+            //delete z[0];
+            z=z.splice(1);
+            var y = z.join(" ");
+            t=parseInt(t);
+            var botHtml = '<p class="botText"><span>' + y + "</span></p>";
+            $("#chatbox").append(botHtml);
+            switch(t)
+            {
+              case 6:
+                res1();
+                break;
+              case 8:
+                res2();
+                break;
+              case 15:
+                res2();
+                break;
+              default:
+                break;
+            }
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        function getBotResponse() {
+          var rawText = $("#nameInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#nameInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          response(rawText);
+      }
+        $("#nameInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+</script>
+</div>
+</body>
+</html>
