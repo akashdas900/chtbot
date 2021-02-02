@@ -31,17 +31,17 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLRO
 
 
 
-main_path="C:/Users/akash/Desktop/UI/Chatbot/"
+main_path=""
 from tensorflow.keras.models import load_model
-model = load_model(main_path+'saved_models/model.h5', custom_objects={"BertModelLayer": bert.BertModelLayer})
+model = load_model(main_path+'model.h5', custom_objects={"BertModelLayer": bert.BertModelLayer})
 
 
 
 bert_model_name="uncased_L-12_H-768_A-12"
 
 #bert_ckpt_dir = os.path.join("model/", bert_model_name)
-bert_ckpt_file = os.path.join(main_path,"bert_model.ckpt.index")
-bert_config_file = os.path.join(main_path,"bert_config.json")
+#bert_ckpt_file = os.path.join(main_path,"bert_model.ckpt.index")
+#bert_config_file = os.path.join(main_path,"bert_config.json")
 
 
 train = pd.read_csv(main_path+"train.csv")
