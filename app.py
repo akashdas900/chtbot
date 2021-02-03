@@ -33,7 +33,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLRO
 
 main_path=""
 from tensorflow.keras.models import load_model
-model = load_model(main_path+'model.h5', custom_objects={"BertModelLayer": bert.BertModelLayer})
+##model = load_model(main_path+'model.h5', custom_objects={"BertModelLayer": bert.BertModelLayer})
 
 
 
@@ -126,11 +126,11 @@ def classify(sentence):
     pred_token_ids = map(lambda tids: tids +[0]*(data.max_seq_len-len(tids)),pred_token_ids)
     pred_token_ids = np.array(list(pred_token_ids))
 
-    predictions = model.predict(pred_token_ids)
-    predictions1=np.argmax(model.predict(pred_token_ids))
+    ##predictions = model.predict(pred_token_ids)
+    ##predictions1=np.argmax(model.predict(pred_token_ids))
 
     return_list =[]
-    return_list.append((classes[predictions1],np.amax(predictions[0])))
+    ##return_list.append((classes[predictions1],np.amax(predictions[0])))
 
     return return_list
 
@@ -164,13 +164,12 @@ def response(sentence, userID='123', show_details=False):
 print(response('hi'))
 
 
-
+"""
 import random
 sentences = [
   "heya",
   "Intake Capacity"
 ]
-
 pred_tokens = map(tokenizer.tokenize, sentences)
 pred_tokens = map(lambda tok: ["[CLS]"] + tok + ["[SEP]"], pred_tokens)
 pred_token_ids = list(map(tokenizer.convert_tokens_to_ids, pred_tokens))
@@ -210,7 +209,7 @@ def give_response(sentence):
     print('response:',responses['responses'][predictions[0]])
 
 give_response(sentence)
-
+"""
 
 
 
